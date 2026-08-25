@@ -60,6 +60,27 @@ jobs:
         working-directory: "Web App"
         run: npm ci
 
+      - name: Ensure square app icons for bundling
+        shell: bash
+        run: |
+          python3 -m pip install --user pillow
+          python3 - <<'PY'
+          from PIL import Image, ImageOps
+          from pathlib import Path
+
+          icon_dir = Path('Web App/src-tauri/icons')
+          icon_dir.mkdir(parents=True, exist_ok=True)
+          source = icon_dir / 'icon.png'
+
+          if source.exists():
+              img = Image.open(source).convert('RGBA')
+              square = ImageOps.fit(img, (1024, 1024), method=Image.Resampling.LANCZOS, centering=(0.5, 0.5))
+              square.save(source)
+              square.resize((256, 256), Image.Resampling.LANCZOS).save(icon_dir / 'icon.ico')
+          else:
+              raise FileNotFoundError('Web App/src-tauri/icons/icon.png is missing')
+          PY
+
       - name: Install Tauri CLI
         working-directory: "Web App"
         run: npm install @tauri-apps/cli@2 --no-save
@@ -75,18 +96,54 @@ jobs:
           path: |
             Web App/src-tauri/target/release/bundle/**/*
 
+  android:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: mobile/package-lock.json
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Install mobile dependencies
+        working-directory: mobile
+        run: npm ci
+
+      - name: Build release APK
+        working-directory: mobile/android
+        run: ./gradlew assembleRelease -PreactNativeArchitectures=arm64-v8a --no-daemon --console=plain
+
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: pansilu-stream-android
+          path: mobile/android/app/build/outputs/apk/release/app-release.apk
+
   release:
-    needs: build
+    needs: [build, android]
     runs-on: ubuntu-latest
     steps:
       - name: Download all artifacts
         uses: actions/download-artifact@v4
         with:
           path: artifacts
+          merge-multiple: false
 
       - name: Create GitHub Release and upload artifacts
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh release create "$GITHUB_REF_NAME" --title "Pansilu Stream $GITHUB_REF_NAME" --generate-notes || echo "Release already exists"
+          if ! gh release view "$GITHUB_REF_NAME" >/dev/null 2>&1; then
+            gh release create "$GITHUB_REF_NAME" --title "Pansilu Stream $GITHUB_REF_NAME" --generate-notes
+          fi
           find artifacts -type f -exec gh release upload "$GITHUB_REF_NAME" {} --clobber +

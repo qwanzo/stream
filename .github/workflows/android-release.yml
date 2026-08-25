@@ -42,5 +42,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           cp mobile/android/app/build/outputs/apk/release/app-release.apk pansilu-stream-android.apk
-          gh release create "$GITHUB_REF_NAME" --title "Pansilu Stream $GITHUB_REF_NAME" --generate-notes || echo "Release already exists"
+          if ! gh release view "$GITHUB_REF_NAME" >/dev/null 2>&1; then
+            gh release create "$GITHUB_REF_NAME" --title "Pansilu Stream $GITHUB_REF_NAME" --generate-notes
+          fi
           gh release upload "$GITHUB_REF_NAME" pansilu-stream-android.apk --clobber
