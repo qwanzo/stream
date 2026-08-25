@@ -4,6 +4,7 @@ on:
   push:
     tags:
       - 'v*'
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -87,7 +88,5 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh release create "$GITHUB_REF_NAME" \
-            --title "Pansilu Stream $GITHUB_REF_NAME" \
-            --generate-notes
-          find artifacts -type f -exec gh release upload "$GITHUB_REF_NAME" {} +
+          gh release create "$GITHUB_REF_NAME" --title "Pansilu Stream $GITHUB_REF_NAME" --generate-notes || echo "Release already exists"
+          find artifacts -type f -exec gh release upload "$GITHUB_REF_NAME" {} --clobber +
