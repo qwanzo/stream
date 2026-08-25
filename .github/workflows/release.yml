@@ -60,7 +60,8 @@ jobs:
         working-directory: "Web App"
         run: npm ci
 
-      - name: Generate required app bundle icons
+      - name: Generate required Tauri bundle icons
+        working-directory: "Web App"
         shell: bash
         run: |
           set -euo pipefail
@@ -69,53 +70,18 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install pillow
           python - <<'PY'
-          import shutil
-          import subprocess
-          import sys
+          from PIL import Image, ImageOps
           from pathlib import Path
 
-          from PIL import Image, ImageOps
-
-          icon_dir = Path('Web App/src-tauri/icons')
-          icon_dir.mkdir(parents=True, exist_ok=True)
-          source = icon_dir / 'icon.png'
-
+          source = Path('src-tauri/icons/icon.png')
           if not source.exists():
               raise FileNotFoundError(f'Missing source icon: {source}')
 
           img = Image.open(source).convert('RGBA')
           square = ImageOps.fit(img, (1024, 1024), method=Image.Resampling.LANCZOS, centering=(0.5, 0.5))
           square.save(source, format='PNG')
-
-          ico_path = icon_dir / 'icon.ico'
-          square.save(ico_path, format='ICO', sizes=[(16, 16), (32, 32), (64, 64), (128, 128), (256, 256), (512, 512)])
-
-          if sys.platform == 'darwin':
-              iconset_dir = icon_dir / 'icon.iconset'
-              if iconset_dir.exists():
-                  shutil.rmtree(iconset_dir)
-              iconset_dir.mkdir(parents=True, exist_ok=True)
-
-              sizes = [16, 32, 128, 256, 512, 1024]
-              for size in sizes:
-                  resized = ImageOps.fit(square, (size, size), method=Image.Resampling.LANCZOS, centering=(0.5, 0.5))
-                  resized.save(iconset_dir / f'icon_{size}x{size}.png')
-                  if size in (16, 32, 128, 256, 512):
-                      resized.save(iconset_dir / f'icon_{size}x{size}@2x.png')
-
-              subprocess.run(['iconutil', '-c', 'icns', str(iconset_dir), '-o', str(icon_dir / 'icon.icns')], check=True)
-
-          icns_path = icon_dir / 'icon.icns'
-          if icns_path.exists() and sys.platform != 'darwin':
-              icns_path.unlink()
-
-          required = ['icon.png', 'icon.ico']
-          if sys.platform == 'darwin':
-              required.append('icon.icns')
-          missing = [str(icon_dir / name) for name in required if not (icon_dir / name).exists()]
-          if missing:
-              raise FileNotFoundError(f'Missing generated icon files: {missing}')
           PY
+          npx @tauri-apps/cli@2 icon src-tauri/icons/icon.png
 
       - name: Install Tauri CLI
         working-directory: "Web App"
@@ -167,6 +133,7 @@ jobs:
 
   release:
     needs: [build, android]
+    if: ${{ always() && !cancelled && (needs.build.result == 'success' || needs.build.result == 'failure') && (needs.android.result == 'success' || needs.android.result == 'failure') }}
     runs-on: ubuntu-latest
     steps:
       - name: Download all artifacts
@@ -174,6 +141,17 @@ jobs:
         with:
           path: artifacts
           merge-multiple: false
+
+      - name: Check for available successful artifacts
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ ! -d artifacts ] || [ -z "$(find artifacts -type f 2>/dev/null)" ]; then
+            echo "No successful build artifacts were produced. Skipping release."
+            exit 0
+          fi
+          echo "Found successful release artifacts:"
+          find artifacts -type f | sort
 
       - name: Rename artifacts to versioned release filenames
         shell: bash
