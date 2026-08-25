@@ -1,0 +1,29 @@
+{
+  "short_name": "PansiluStream",
+  "name": "Pansilu Stream - stream.pansilu.cc.cd",
+  "icons": [
+    {
+      "src": "/logo-192.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/logo-512.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/logo.svg",
+      "type": "image/svg+xml",
+      "sizes": "any",
+      "purpose": "any maskable"
+    }
+  ],
+  "start_url": "/",
+  "background_color": "#141414",
+  "theme_color": "#E50914",
+  "display": "standalone",
+  "orientation": "portrait"
+}
