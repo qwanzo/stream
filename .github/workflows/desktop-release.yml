@@ -1,4 +1,4 @@
-name: Desktop Release
+name: Release
 
 on:
   push:
@@ -60,25 +60,61 @@ jobs:
         working-directory: "Web App"
         run: npm ci
 
-      - name: Ensure square app icons for bundling
+      - name: Generate required app bundle icons
         shell: bash
         run: |
-          python3 -m pip install --user pillow
-          python3 - <<'PY'
-          from PIL import Image, ImageOps
+          set -euo pipefail
+          python3 -m venv .venv
+          . .venv/bin/activate
+          python -m pip install --upgrade pip
+          python -m pip install pillow
+          python - <<'PY'
+          import shutil
+          import subprocess
+          import sys
           from pathlib import Path
+
+          from PIL import Image, ImageOps
 
           icon_dir = Path('Web App/src-tauri/icons')
           icon_dir.mkdir(parents=True, exist_ok=True)
           source = icon_dir / 'icon.png'
 
-          if source.exists():
-              img = Image.open(source).convert('RGBA')
-              square = ImageOps.fit(img, (1024, 1024), method=Image.Resampling.LANCZOS, centering=(0.5, 0.5))
-              square.save(source)
-              square.resize((256, 256), Image.Resampling.LANCZOS).save(icon_dir / 'icon.ico')
-          else:
-              raise FileNotFoundError('Web App/src-tauri/icons/icon.png is missing')
+          if not source.exists():
+              raise FileNotFoundError(f'Missing source icon: {source}')
+
+          img = Image.open(source).convert('RGBA')
+          square = ImageOps.fit(img, (1024, 1024), method=Image.Resampling.LANCZOS, centering=(0.5, 0.5))
+          square.save(source, format='PNG')
+
+          ico_path = icon_dir / 'icon.ico'
+          square.save(ico_path, format='ICO', sizes=[(16, 16), (32, 32), (64, 64), (128, 128), (256, 256), (512, 512)])
+
+          if sys.platform == 'darwin':
+              iconset_dir = icon_dir / 'icon.iconset'
+              if iconset_dir.exists():
+                  shutil.rmtree(iconset_dir)
+              iconset_dir.mkdir(parents=True, exist_ok=True)
+
+              sizes = [16, 32, 128, 256, 512, 1024]
+              for size in sizes:
+                  resized = ImageOps.fit(square, (size, size), method=Image.Resampling.LANCZOS, centering=(0.5, 0.5))
+                  resized.save(iconset_dir / f'icon_{size}x{size}.png')
+                  if size in (16, 32, 128, 256, 512):
+                      resized.save(iconset_dir / f'icon_{size}x{size}@2x.png')
+
+              subprocess.run(['iconutil', '-c', 'icns', str(iconset_dir), '-o', str(icon_dir / 'icon.icns')], check=True)
+
+          icns_path = icon_dir / 'icon.icns'
+          if icns_path.exists() and sys.platform != 'darwin':
+              icns_path.unlink()
+
+          required = ['icon.png', 'icon.ico']
+          if sys.platform == 'darwin':
+              required.append('icon.icns')
+          missing = [str(icon_dir / name) for name in required if not (icon_dir / name).exists()]
+          if missing:
+              raise FileNotFoundError(f'Missing generated icon files: {missing}')
           PY
 
       - name: Install Tauri CLI
@@ -139,11 +175,73 @@ jobs:
           path: artifacts
           merge-multiple: false
 
+      - name: Rename artifacts to versioned release filenames
+        shell: bash
+        env:
+          VERSION: ${{ github.ref_name }}
+        run: |
+          set -euo pipefail
+          version_no_v="${VERSION#v}"
+          mkdir -p release-files
+
+          handle_file() {
+            local src="$1"
+            local target="$2"
+            cp "$src" "release-files/$target"
+          }
+
+          for artifact_dir in artifacts/*; do
+            [[ -d "$artifact_dir" ]] || continue
+            for file in "$artifact_dir"/*; do
+              [[ -f "$file" ]] || continue
+              name="${file##*/}"
+              lower="${name,,}"
+
+              case "$artifact_dir" in
+                *linux*)
+                  if [[ "$lower" == *.appimage ]]; then
+                    handle_file "$file" "pansilu-stream-linux-${version_no_v}.AppImage"
+                  elif [[ "$lower" == *.deb ]]; then
+                    handle_file "$file" "pansilu-stream-linux-${version_no_v}.deb"
+                  elif [[ "$lower" == *.rpm ]]; then
+                    handle_file "$file" "pansilu-stream-linux-${version_no_v}.rpm"
+                  fi
+                  ;;
+                *macos*)
+                  if [[ "$lower" == *.dmg ]]; then
+                    handle_file "$file" "pansilu-stream-macos-${version_no_v}.dmg"
+                  elif [[ "$lower" == *.tar.gz || "$lower" == *.tgz ]]; then
+                    handle_file "$file" "pansilu-stream-macos-${version_no_v}.tar.gz"
+                  elif [[ "$lower" == *.app ]]; then
+                    handle_file "$file" "pansilu-stream-macos-${version_no_v}.app"
+                  fi
+                  ;;
+                *windows*)
+                  if [[ "$lower" == *.msi ]]; then
+                    handle_file "$file" "pansilu-stream-windows-${version_no_v}.msi"
+                  elif [[ "$lower" == *.zip ]]; then
+                    handle_file "$file" "pansilu-stream-windows-${version_no_v}.zip"
+                  elif [[ "$lower" == *.exe ]]; then
+                    handle_file "$file" "pansilu-stream-windows-${version_no_v}.exe"
+                  fi
+                  ;;
+                *android*)
+                  if [[ "$lower" == *.apk ]]; then
+                    handle_file "$file" "pansilu-stream-android-${version_no_v}.apk"
+                  fi
+                  ;;
+              esac
+            done
+          done
+
+          find release-files -maxdepth 1 -type f | sort
+
       - name: Create GitHub Release and upload artifacts
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
+          set -euo pipefail
           if ! gh release view "$GITHUB_REF_NAME" >/dev/null 2>&1; then
             gh release create "$GITHUB_REF_NAME" --title "Pansilu Stream $GITHUB_REF_NAME" --generate-notes
           fi
-          find artifacts -type f -exec gh release upload "$GITHUB_REF_NAME" {} --clobber +
+          find release-files -type f -exec gh release upload "$GITHUB_REF_NAME" {} --clobber +
