@@ -59,6 +59,10 @@ jobs:
         working-directory: "Web App"
         run: npm ci
 
+      - name: Install Tauri CLI
+        working-directory: "Web App"
+        run: npm install @tauri-apps/cli@2 --no-save
+
       - name: Build desktop app
         working-directory: "Web App"
         run: npm run tauri:build
