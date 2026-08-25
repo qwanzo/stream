@@ -33,8 +33,8 @@ jobs:
         run: npm ci
 
       - name: Build release APK
-        working-directory: mobile
-        run: ./android/gradlew assembleRelease -PreactNativeArchitectures=arm64-v8a --no-daemon --console=plain
+        working-directory: mobile/android
+        run: ./gradlew assembleRelease -PreactNativeArchitectures=arm64-v8a --no-daemon --console=plain
 
       - name: Create GitHub Release and upload APK
         env:
