@@ -49,3 +49,5 @@ mobile/vendor/bundle/
 .vscode/*.code-workspace
 coverage/
 .metro-health-check*
+
+# this is all
