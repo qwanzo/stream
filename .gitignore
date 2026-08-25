@@ -16,6 +16,7 @@ pnpm-debug.log*
 # Web build output
 Web App/dist/
 Web App/.node/
+Web App/public/downloads/*.apk
 
 # Tauri and Rust build output
 Web App/src-tauri/target/

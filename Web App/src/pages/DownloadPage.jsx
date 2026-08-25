@@ -1,7 +1,7 @@
 import React from 'react';
 import { Download, ShieldCheck, Smartphone } from 'lucide-react';
 
-const APK_PATH = '/downloads/pansilu-stream-android.apk?v=20260825';
+const APK_PATH = 'https://github.com/p4nsilu/streamer/releases/latest/download/pansilu-stream-android.apk';
 
 export default function DownloadPage() {
   return (
