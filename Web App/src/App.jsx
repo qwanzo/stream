@@ -63,7 +63,7 @@ function AppLayout() {
             <div className="flex items-center space-x-2">
               <div className="bg-[#E50914] text-white px-2 py-0.5 rounded font-black text-sm">P</div>
               <span className="text-gray-300 font-bold text-sm tracking-wider">STREAMSILU</span>
-              <span className="text-[10px] text-gray-500 font-normal border border-zinc-800 px-2 py-0.5 rounded">stream.streamsilu.cc.cd</span>
+              <span className="text-[10px] text-gray-500 font-normal border border-zinc-800 px-2 py-0.5 rounded">streamsilu.cc.cd</span>
             </div>
             <p className="text-gray-500">
               Powered by <a href="https://www.themoviedb.org" target="_blank" rel="noreferrer" className="text-red-500 hover:underline">TMDB</a>.

@@ -23,7 +23,7 @@ async function callGroq(prompt, apiKey, model) {
       messages: [
         {
           role: 'system',
-          content: `You are streamsilu AI, an expert cinema recommendations assistant for streamsilu (stream.streamsilu.cc.cd).
+          content: `You are streamsilu AI, an expert cinema recommendations assistant for streamsilu (streamsilu.cc.cd).
 Recommend 4 top matching movies or TV shows based on the user's prompt.
 Return ONLY a valid JSON array of objects with keys: "title", "year", "type" ("movie" or "tv"), "recommendationReason", and "tmdbId" (integer).
 Example: [{"title":"Inception","year":2010,"type":"movie","recommendationReason":"Mind-bending sci-fi thriller.","tmdbId":27205}]`
