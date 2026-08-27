@@ -95,10 +95,10 @@ export default function Navbar() {
               </div>
               <div className="flex flex-col leading-none">
                 <span className="text-white font-black text-base sm:text-xl tracking-wider uppercase">
-                  PANSILU<span className="text-[#E50914]">STREAM</span>
+                  STREAMSILU<span className="text-[#E50914]">STREAM</span>
                 </span>
                 <span className="text-[8px] sm:text-[9px] text-gray-400 font-bold tracking-wider uppercase hidden xs:block">
-                  stream.pansilu.cc.cd
+                  stream.streamsilu.cc.cd
                 </span>
               </div>
             </Link>

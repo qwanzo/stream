@@ -111,12 +111,12 @@ def render_logo_pixel(x, y, w, h):
 
 # Generate 192x192
 png_192 = create_png(192, 192, render_logo_pixel)
-with open('/Users/pansilu/Dev/Pansilu Stream/public/logo-192.png', 'wb') as f:
+with open('/Users/streamsilu/Dev/streamsilu/public/logo-192.png', 'wb') as f:
     f.write(png_192)
 
 # Generate 512x512
 png_512 = create_png(512, 512, render_logo_pixel)
-with open('/Users/pansilu/Dev/Pansilu Stream/public/logo-512.png', 'wb') as f:
+with open('/Users/streamsilu/Dev/streamsilu/public/logo-512.png', 'wb') as f:
     f.write(png_512)
 
 print("Generated logo-192.png and logo-512.png successfully!")

@@ -1,8 +1,8 @@
 {
   "$schema": "https://schema.tauri.app/config/2.0.0",
-  "productName": "Pansilu Stream",
+  "productName": "streamsilu",
   "version": "1.0.0",
-  "identifier": "cc.pansilu.stream",
+  "identifier": "cc.streamsilu.stream",
   "build": {
     "beforeDevCommand": "npm run dev",
     "devUrl": "http://localhost:5173",
@@ -12,7 +12,7 @@
   "app": {
     "windows": [
       {
-        "title": "Pansilu Stream",
+        "title": "streamsilu",
         "width": 1280,
         "height": 800,
         "minWidth": 800,

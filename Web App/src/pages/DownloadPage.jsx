@@ -67,19 +67,19 @@ export default function DownloadPage() {
     if (assets.length > 0) return assets;
     return [
       {
-        name: 'pansilu-stream-android.apk',
-        browser_download_url: 'https://github.com/qwanzo/stream/releases/latest/download/pansilu-stream-android.apk',
+        name: 'streamsilu-android.apk',
+        browser_download_url: 'https://github.com/qwanzo/stream/releases/latest/download/streamsilu-android.apk',
         size: 0,
         label: 'Android APK'
       },
       {
-        name: 'pansilu-stream-windows.zip',
+        name: 'streamsilu-windows.zip',
         browser_download_url: 'https://github.com/qwanzo/stream/releases/latest',
         size: 0,
         label: 'Windows'
       },
       {
-        name: 'pansilu-stream-linux.AppImage',
+        name: 'streamsilu-linux.AppImage',
         browser_download_url: 'https://github.com/qwanzo/stream/releases/latest',
         size: 0,
         label: 'Linux'
@@ -95,7 +95,7 @@ export default function DownloadPage() {
             <Download className="h-8 w-8" />
           </div>
           <p className="mt-6 text-xs font-bold uppercase tracking-[0.2em] text-red-500">Latest GitHub Release</p>
-          <h1 className="mt-2 text-3xl font-extrabold tracking-tight sm:text-4xl">Download Pansilu Stream</h1>
+          <h1 className="mt-2 text-3xl font-extrabold tracking-tight sm:text-4xl">Download streamsilu</h1>
           <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-gray-400">
             Grab the latest Android, Windows, and Linux build directly from the GitHub release assets.
           </p>

@@ -11,38 +11,38 @@ export const ACCENT_THEMES = {
 
 export function AppProvider({ children }) {
   const [apiKey, setApiKeyState] = useState(() => {
-    return localStorage.getItem('pansilu_tmdb_api_key') || import.meta.env.VITE_TMDB_API_KEY || '5e3fe84dd167f1eab0a5695d99177cf7';
+    return localStorage.getItem('streamsilu_tmdb_api_key') || import.meta.env.VITE_TMDB_API_KEY || '5e3fe84dd167f1eab0a5695d99177cf7';
   });
 
   const setApiKey = (key) => {
     setApiKeyState(key);
     if (key) {
-      localStorage.setItem('pansilu_tmdb_api_key', key);
+      localStorage.setItem('streamsilu_tmdb_api_key', key);
     } else {
-      localStorage.removeItem('pansilu_tmdb_api_key');
+      localStorage.removeItem('streamsilu_tmdb_api_key');
     }
   };
 
   const [groqApiKey, setGroqApiKeyState] = useState(() => {
-    return localStorage.getItem('pansilu_groq_api_key') || import.meta.env.VITE_GROQ_API_KEY || '';
+    return localStorage.getItem('streamsilu_groq_api_key') || import.meta.env.VITE_GROQ_API_KEY || '';
   });
 
   const setGroqApiKey = (key) => {
     setGroqApiKeyState(key);
     if (key) {
-      localStorage.setItem('pansilu_groq_api_key', key);
+      localStorage.setItem('streamsilu_groq_api_key', key);
     } else {
-      localStorage.removeItem('pansilu_groq_api_key');
+      localStorage.removeItem('streamsilu_groq_api_key');
     }
   };
 
   const [themeAccent, setThemeAccentState] = useState(() => {
-    return localStorage.getItem('pansilu_theme_accent') || 'red';
+    return localStorage.getItem('streamsilu_theme_accent') || 'red';
   });
 
   const setThemeAccent = (theme) => {
     setThemeAccentState(theme);
-    localStorage.setItem('pansilu_theme_accent', theme);
+    localStorage.setItem('streamsilu_theme_accent', theme);
   };
 
   const [isApiKeyModalOpen, setIsApiKeyModalOpen] = useState(false);
@@ -57,7 +57,7 @@ export function AppProvider({ children }) {
 
   const [watchlist, setWatchlist] = useState(() => {
     try {
-      const saved = localStorage.getItem('pansilu_watchlist');
+      const saved = localStorage.getItem('streamsilu_watchlist');
       return saved ? JSON.parse(saved) : [];
     } catch {
       return [];
@@ -65,7 +65,7 @@ export function AppProvider({ children }) {
   });
 
   useEffect(() => {
-    localStorage.setItem('pansilu_watchlist', JSON.stringify(watchlist));
+    localStorage.setItem('streamsilu_watchlist', JSON.stringify(watchlist));
   }, [watchlist]);
 
   const toggleWatchlist = (item) => {
@@ -84,7 +84,7 @@ export function AppProvider({ children }) {
 
   const [continueWatching, setContinueWatching] = useState(() => {
     try {
-      const saved = localStorage.getItem('pansilu_continue_watching');
+      const saved = localStorage.getItem('streamsilu_continue_watching');
       return saved ? JSON.parse(saved) : [];
     } catch {
       return [];
@@ -92,7 +92,7 @@ export function AppProvider({ children }) {
   });
 
   useEffect(() => {
-    localStorage.setItem('pansilu_continue_watching', JSON.stringify(continueWatching));
+    localStorage.setItem('streamsilu_continue_watching', JSON.stringify(continueWatching));
   }, [continueWatching]);
 
   const saveWatchProgress = (media, season = 1, episode = 1) => {
@@ -110,7 +110,7 @@ export function AppProvider({ children }) {
 
   const [userRatings, setUserRatings] = useState(() => {
     try {
-      const saved = localStorage.getItem('pansilu_user_ratings');
+      const saved = localStorage.getItem('streamsilu_user_ratings');
       return saved ? JSON.parse(saved) : {};
     } catch {
       return {};
@@ -118,7 +118,7 @@ export function AppProvider({ children }) {
   });
 
   useEffect(() => {
-    localStorage.setItem('pansilu_user_ratings', JSON.stringify(userRatings));
+    localStorage.setItem('streamsilu_user_ratings', JSON.stringify(userRatings));
   }, [userRatings]);
 
   const setUserRating = (mediaId, rating, note = '') => {

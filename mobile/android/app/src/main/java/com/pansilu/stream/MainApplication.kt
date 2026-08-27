@@ -1,4 +1,4 @@
-package com.pansilu.stream
+package com.streamsilu.stream
 
 import android.app.Application
 import com.facebook.react.PackageList

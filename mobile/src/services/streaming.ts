@@ -32,11 +32,11 @@ const providers: StreamProvider[] = [
     }
   },
   {
-    id: 'pansilu',
+    id: 'streamsilu',
     name: 'Aura',
     buildUrl: ({ type, id, season = 1, episode = 1 }) => type === 'tv'
-      ? `https://stream-movies-server-01.pansilu.cc.cd/embed/tv/${id}/${season}/${episode}`
-      : `https://stream-movies-server-01.pansilu.cc.cd/embed/movie/${id}`
+      ? `https://stream-movies-server-01.streamsilu.cc.cd/embed/tv/${id}/${season}/${episode}`
+      : `https://stream-movies-server-01.streamsilu.cc.cd/embed/movie/${id}`
   },
   {
     id: 'vidsrc',

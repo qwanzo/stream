@@ -1,7 +1,7 @@
 /**
  * Multi-Provider Streaming & Embed API Integration Service
  * Features Clean Codenamed Streaming Engines (No Brackets):
- * - Aura: Pansilu Server 01 (stream-movies-server-01.pansilu.cc.cd)
+ * - Aura: streamsilu Server 01 (stream-movies-server-01.streamsilu.cc.cd)
  * - Cdn: CDN Embed (cdn-embed.com)
  * - Pulse: 2Embed (www.2embed.cc)
  * - Nova: VidLink Pro (vidlink.pro)
@@ -10,7 +10,7 @@
  * - Titan: Rive Aggregator (rivestream.app/embed/agg)
  */
 
-export const UNSANDBOXED_SERVERS = new Set(['pansilu', 'vidsrc', 'vidlink', 'embed2', 'cdn']);
+export const UNSANDBOXED_SERVERS = new Set(['streamsilu', 'vidsrc', 'vidlink', 'embed2', 'cdn']);
 
 export const PHANTOM_SERVER = {
   id: 'torrent',
@@ -21,12 +21,12 @@ export const PHANTOM_SERVER = {
 };
 
 export const RIVE_SERVERS = {
-  PANSILU: {
-    id: 'pansilu',
+  STREAMSILU: {
+    id: 'streamsilu',
     name: 'Aura',
     fullName: 'Aura',
     badge: 'Default / 4K',
-    description: 'Primary custom Pansilu Stream server (stream-movies-server-01.pansilu.cc.cd)',
+    description: 'Primary custom streamsilu server (stream-movies-server-01.streamsilu.cc.cd)',
   },
   CDN: {
     id: 'cdn',
@@ -80,7 +80,7 @@ export const RIVE_SERVERS = {
  * @param {string | number} [options.id] - TMDB Media ID
  * @param {string | number} [options.season=1] - TV Season number
  * @param {string | number} [options.episode=1] - TV Episode number
- * @param {'pansilu' | 'cdn' | 'embed2' | 'vidlink' | 'vidsrc' | 'main' | 'agg'} [options.server='main'] - Selected stream server
+ * @param {'streamsilu' | 'cdn' | 'embed2' | 'vidlink' | 'vidsrc' | 'main' | 'agg'} [options.server='main'] - Selected stream server
  * @returns {string} Fully qualified embed URL
  */
 export function getRiveEmbedUrl({ type = 'movie', id, season = 1, episode = 1, server = 'main' }) {
@@ -90,11 +90,11 @@ export function getRiveEmbedUrl({ type = 'movie', id, season = 1, episode = 1, s
   const s = season || 1;
   const e = episode || 1;
 
-  // Aura (Pansilu Main Server: stream-movies-server-01.pansilu.cc.cd)
-  if (server === 'pansilu') {
+  // Aura (streamsilu Main Server: stream-movies-server-01.streamsilu.cc.cd)
+  if (server === 'streamsilu') {
     return isTv
-      ? `https://stream-movies-server-01.pansilu.cc.cd/embed/tv/${id}/${s}/${e}`
-      : `https://stream-movies-server-01.pansilu.cc.cd/embed/movie/${id}`;
+      ? `https://stream-movies-server-01.streamsilu.cc.cd/embed/tv/${id}/${s}/${e}`
+      : `https://stream-movies-server-01.streamsilu.cc.cd/embed/movie/${id}`;
   }
 
   // Cdn (CDN Embed: cdn-embed.com)

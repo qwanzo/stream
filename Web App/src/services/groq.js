@@ -1,5 +1,5 @@
 /**
- * Groq AI Service - Pansilu AI Film & Animation Assistant
+ * Groq AI Service - streamsilu AI Film & Animation Assistant
  * Model: oss-120b (with fallback to llama-3.3-70b-versatile)
  * Documentation: https://console.groq.com/docs/quickstart
  */
@@ -23,7 +23,7 @@ async function callGroq(prompt, apiKey, model) {
       messages: [
         {
           role: 'system',
-          content: `You are Pansilu AI, an expert cinema recommendations assistant for Pansilu Stream (stream.pansilu.cc.cd).
+          content: `You are streamsilu AI, an expert cinema recommendations assistant for streamsilu (stream.streamsilu.cc.cd).
 Recommend 4 top matching movies or TV shows based on the user's prompt.
 Return ONLY a valid JSON array of objects with keys: "title", "year", "type" ("movie" or "tv"), "recommendationReason", and "tmdbId" (integer).
 Example: [{"title":"Inception","year":2010,"type":"movie","recommendationReason":"Mind-bending sci-fi thriller.","tmdbId":27205}]`
@@ -57,7 +57,7 @@ export async function askGroqAi(prompt, apiKey) {
     for (const model of [GROQ_MODEL, GROQ_FALLBACK_MODEL]) {
       try {
         const results = await callGroq(prompt, apiKey, model);
-        console.log(`Pansilu AI used model: ${model}`);
+        console.log(`streamsilu AI used model: ${model}`);
         return results;
       } catch (err) {
         console.warn(`Groq model ${model} failed:`, err.message);

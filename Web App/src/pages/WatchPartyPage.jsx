@@ -11,7 +11,7 @@ export default function WatchPartyPage() {
   const [copied, setCopied] = useState(false);
   const [messages, setMessages] = useState([
     { id: 1, user: 'System', text: `Welcome to Watch Party Room #${roomId || 'live'}!`, time: 'Just now', system: true },
-    { id: 2, user: 'Pansilu Stream Bot', text: 'Share your room link with friends to watch movies in sync!', time: 'Just now', bot: true }
+    { id: 2, user: 'streamsilu Bot', text: 'Share your room link with friends to watch movies in sync!', time: 'Just now', bot: true }
   ]);
   const [chatInput, setChatInput] = useState('');
   const [floatingEmojis, setFloatingEmojis] = useState([]);

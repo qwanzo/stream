@@ -1,8 +1,8 @@
 [package]
-name = "pansilu-stream"
+name = "streamsilu"
 version = "1.0.0"
-description = "Pansilu Stream Tauri Desktop App"
-authors = ["Pansilu"]
+description = "streamsilu Tauri Desktop App"
+authors = ["streamsilu"]
 license = "MIT"
 edition = "2021"
 rust-version = "1.70"
