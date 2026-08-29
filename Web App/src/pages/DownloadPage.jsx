@@ -95,7 +95,7 @@ export default function DownloadPage() {
             <Download className="h-8 w-8" />
           </div>
           <p className="mt-6 text-xs font-bold uppercase tracking-[0.2em] text-red-500">Latest GitHub Release</p>
-          <h1 className="mt-2 text-3xl font-extrabold tracking-tight sm:text-4xl">Download PLIX</h1>
+          <h1 className="mt-2 text-3xl font-extrabold tracking-tight sm:text-4xl">Download CineVault</h1>
           <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-gray-400">
             Grab the latest Android, Windows, and Linux build directly from the GitHub release assets.
           </p>

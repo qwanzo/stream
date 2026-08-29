@@ -78,7 +78,7 @@ export default function SettingsPage({ onClose }) {
 
           <div className="pt-4 border-t border-zinc-800">
             <p className="text-[10px] text-gray-600 text-center">
-              PLIX v1.0.0 — Built with Tauri + React
+              CineVault v1.0.0 — Built with Tauri + React
             </p>
           </div>
         </div>

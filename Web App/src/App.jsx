@@ -56,13 +56,13 @@ function AppLayout() {
 
       <ModalsContainer />
 
-      {/* PLIX Footer */}
+      {/* CineVault Footer */}
       <footer className="border-t border-zinc-800/80 bg-[#0e0e0e] py-10 text-xs text-gray-500 font-medium">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-4">
           <div className="flex flex-wrap items-center justify-between gap-4">
             <div className="flex items-center space-x-2">
-              <span className="text-gray-300 font-black text-sm tracking-[0.2em]">PLIX</span>
-              <span className="text-[10px] text-gray-500 font-normal border border-zinc-800 px-2 py-0.5 rounded">plix.cc.cd</span>
+              <span className="text-gray-300 font-black text-sm tracking-[0.2em]">CINEVAULT</span>
+              <span className="text-[10px] text-gray-500 font-normal border border-zinc-800 px-2 py-0.5 rounded">cinevault.cc.cd</span>
             </div>
             <p className="text-gray-500">
               Powered by <a href="https://www.themoviedb.org" target="_blank" rel="noreferrer" className="text-red-500 hover:underline">TMDB</a>.

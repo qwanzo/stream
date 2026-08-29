@@ -310,7 +310,7 @@ export default function MediaModal() {
             <div className="bg-gradient-to-r from-zinc-900 via-zinc-900 to-red-950/30 border border-zinc-800 p-4 rounded-xl flex items-center justify-between text-xs text-gray-400">
               <div className="flex items-center space-x-2">
                 <Sparkles className="w-4 h-4 text-red-500" />
-                <span>Powered by <strong>PLIX Engine</strong></span>
+                <span>Powered by <strong>CineVault Engine</strong></span>
               </div>
               <button
                 onClick={handlePlay}

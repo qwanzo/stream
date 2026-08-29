@@ -11,38 +11,38 @@ export const ACCENT_THEMES = {
 
 export function AppProvider({ children }) {
   const [apiKey, setApiKeyState] = useState(() => {
-    return localStorage.getItem('plix_tmdb_api_key') || import.meta.env.VITE_TMDB_API_KEY || '5e3fe84dd167f1eab0a5695d99177cf7';
+    return localStorage.getItem('cinevault_tmdb_api_key') || import.meta.env.VITE_TMDB_API_KEY || '5e3fe84dd167f1eab0a5695d99177cf7';
   });
 
   const setApiKey = (key) => {
     setApiKeyState(key);
     if (key) {
-      localStorage.setItem('plix_tmdb_api_key', key);
+      localStorage.setItem('cinevault_tmdb_api_key', key);
     } else {
-      localStorage.removeItem('plix_tmdb_api_key');
+      localStorage.removeItem('cinevault_tmdb_api_key');
     }
   };
 
   const [groqApiKey, setGroqApiKeyState] = useState(() => {
-    return localStorage.getItem('plix_groq_api_key') || import.meta.env.VITE_GROQ_API_KEY || '';
+    return localStorage.getItem('cinevault_groq_api_key') || import.meta.env.VITE_GROQ_API_KEY || '';
   });
 
   const setGroqApiKey = (key) => {
     setGroqApiKeyState(key);
     if (key) {
-      localStorage.setItem('plix_groq_api_key', key);
+      localStorage.setItem('cinevault_groq_api_key', key);
     } else {
-      localStorage.removeItem('plix_groq_api_key');
+      localStorage.removeItem('cinevault_groq_api_key');
     }
   };
 
   const [themeAccent, setThemeAccentState] = useState(() => {
-    return localStorage.getItem('plix_theme_accent') || 'red';
+    return localStorage.getItem('cinevault_theme_accent') || 'red';
   });
 
   const setThemeAccent = (theme) => {
     setThemeAccentState(theme);
-    localStorage.setItem('plix_theme_accent', theme);
+    localStorage.setItem('cinevault_theme_accent', theme);
   };
 
   const [isApiKeyModalOpen, setIsApiKeyModalOpen] = useState(false);
@@ -57,7 +57,7 @@ export function AppProvider({ children }) {
 
   const [watchlist, setWatchlist] = useState(() => {
     try {
-      const saved = localStorage.getItem('plix_watchlist');
+      const saved = localStorage.getItem('cinevault_watchlist');
       return saved ? JSON.parse(saved) : [];
     } catch {
       return [];
@@ -65,7 +65,7 @@ export function AppProvider({ children }) {
   });
 
   useEffect(() => {
-    localStorage.setItem('plix_watchlist', JSON.stringify(watchlist));
+    localStorage.setItem('cinevault_watchlist', JSON.stringify(watchlist));
   }, [watchlist]);
 
   const toggleWatchlist = (item) => {
@@ -84,7 +84,7 @@ export function AppProvider({ children }) {
 
   const [continueWatching, setContinueWatching] = useState(() => {
     try {
-      const saved = localStorage.getItem('plix_continue_watching');
+      const saved = localStorage.getItem('cinevault_continue_watching');
       return saved ? JSON.parse(saved) : [];
     } catch {
       return [];
@@ -92,7 +92,7 @@ export function AppProvider({ children }) {
   });
 
   useEffect(() => {
-    localStorage.setItem('plix_continue_watching', JSON.stringify(continueWatching));
+    localStorage.setItem('cinevault_continue_watching', JSON.stringify(continueWatching));
   }, [continueWatching]);
 
   const saveWatchProgress = (media, season = 1, episode = 1) => {
@@ -110,7 +110,7 @@ export function AppProvider({ children }) {
 
   const [userRatings, setUserRatings] = useState(() => {
     try {
-      const saved = localStorage.getItem('plix_user_ratings');
+      const saved = localStorage.getItem('cinevault_user_ratings');
       return saved ? JSON.parse(saved) : {};
     } catch {
       return {};
@@ -118,7 +118,7 @@ export function AppProvider({ children }) {
   });
 
   useEffect(() => {
-    localStorage.setItem('plix_user_ratings', JSON.stringify(userRatings));
+    localStorage.setItem('cinevault_user_ratings', JSON.stringify(userRatings));
   }, [userRatings]);
 
   const setUserRating = (mediaId, rating, note = '') => {

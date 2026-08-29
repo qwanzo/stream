@@ -90,8 +90,8 @@ export default function Navbar() {
           <div className="flex items-center gap-5 lg:gap-9 min-w-0">
             <Link to="/" className="flex items-center gap-2 flex-shrink-0 group">
               <div className="flex items-center leading-none">
-                <span className="text-white font-black text-base sm:text-xl tracking-[0.22em] uppercase">
-                  PLIX
+                <span className="text-white font-black text-base sm:text-xl tracking-[0.18em] uppercase">
+                  CINEVAULT
                 </span>
               </div>
             </Link>
