@@ -89,16 +89,9 @@ export default function Navbar() {
           {/* Left: Logo + Desktop Nav */}
           <div className="flex items-center gap-5 lg:gap-9 min-w-0">
             <Link to="/" className="flex items-center gap-2 flex-shrink-0 group">
-              <div className="relative flex items-center justify-center w-8 h-8 sm:w-9 sm:h-9 bg-gradient-to-br from-red-600 to-red-800 rounded-lg shadow-lg shadow-red-900/60 group-hover:scale-105 transition-transform border border-red-500/40">
-                <Play className="w-4 h-4 sm:w-5 sm:h-5 text-white fill-current ml-0.5" />
-                <div className="absolute -bottom-0.5 -right-0.5 bg-emerald-500 w-2 h-2 rounded-full border border-black animate-pulse" />
-              </div>
-              <div className="flex flex-col leading-none">
-                <span className="text-white font-black text-base sm:text-xl tracking-wider uppercase">
-                  STREAMSILU
-                </span>
-                <span className="text-[8px] sm:text-[9px] text-gray-400 font-bold tracking-wider uppercase hidden xs:block">
-                  streamsilu.cc.cd
+              <div className="flex items-center leading-none">
+                <span className="text-white font-black text-base sm:text-xl tracking-[0.22em] uppercase">
+                  PLIX
                 </span>
               </div>
             </Link>

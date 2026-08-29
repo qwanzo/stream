@@ -59,7 +59,7 @@ export default function AiAssistantModal() {
             </div>
             <div>
               <h3 className="text-lg font-extrabold text-white flex items-center space-x-2">
-                <span>streamsilu AI Assistant</span>
+                <span>PLIX AI Assistant</span>
                 <span className="bg-red-600/30 text-red-400 text-[10px] font-extrabold uppercase px-2 py-0.5 rounded border border-red-500/40">
                   Groq oss-120b
                 </span>
@@ -123,7 +123,7 @@ export default function AiAssistantModal() {
 
           {!loading && recommendations.length > 0 && (
             <div className="space-y-3 pt-2">
-              <p className="text-xs font-bold text-gray-400 uppercase tracking-wider">streamsilu AI Recommendations</p>
+              <p className="text-xs font-bold text-gray-400 uppercase tracking-wider">PLIX AI Recommendations</p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {recommendations.map((rec, idx) => {
                   const mediaType = rec.type || 'movie';

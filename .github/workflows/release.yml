@@ -17,13 +17,13 @@ jobs:
         include:
           - platform: ubuntu-latest
             target: x86_64-unknown-linux-gnu
-            artifact_name: streamsilu-linux
+            artifact_name: plix-linux
           - platform: macos-latest
             target: x86_64-apple-darwin
-            artifact_name: streamsilu-macos
+            artifact_name: plix-macos
           - platform: windows-latest
             target: x86_64-pc-windows-msvc
-            artifact_name: streamsilu-windows
+            artifact_name: plix-windows
     runs-on: ${{ matrix.platform }}
     steps:
       - name: Check out source
@@ -132,7 +132,7 @@ jobs:
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         with:
-          name: streamsilu-android
+          name: plix-android
           path: mobile/android/app/build/outputs/apk/release/app-release.apk
 
   release:
@@ -182,34 +182,34 @@ jobs:
               case "$artifact_dir" in
                 *linux*)
                   if [[ "$lower" == *.appimage ]]; then
-                    handle_file "$file" "streamsilu-linux-${version_no_v}.AppImage"
+                    handle_file "$file" "plix-linux-${version_no_v}.AppImage"
                   elif [[ "$lower" == *.deb ]]; then
-                    handle_file "$file" "streamsilu-linux-${version_no_v}.deb"
+                    handle_file "$file" "plix-linux-${version_no_v}.deb"
                   elif [[ "$lower" == *.rpm ]]; then
-                    handle_file "$file" "streamsilu-linux-${version_no_v}.rpm"
+                    handle_file "$file" "plix-linux-${version_no_v}.rpm"
                   fi
                   ;;
                 *macos*)
                   if [[ "$lower" == *.dmg ]]; then
-                    handle_file "$file" "streamsilu-macos-${version_no_v}.dmg"
+                    handle_file "$file" "plix-macos-${version_no_v}.dmg"
                   elif [[ "$lower" == *.tar.gz || "$lower" == *.tgz ]]; then
-                    handle_file "$file" "streamsilu-macos-${version_no_v}.tar.gz"
+                    handle_file "$file" "plix-macos-${version_no_v}.tar.gz"
                   elif [[ "$lower" == *.app ]]; then
-                    handle_file "$file" "streamsilu-macos-${version_no_v}.app"
+                    handle_file "$file" "plix-macos-${version_no_v}.app"
                   fi
                   ;;
                 *windows*)
                   if [[ "$lower" == *.msi ]]; then
-                    handle_file "$file" "streamsilu-windows-${version_no_v}.msi"
+                    handle_file "$file" "plix-windows-${version_no_v}.msi"
                   elif [[ "$lower" == *.zip ]]; then
-                    handle_file "$file" "streamsilu-windows-${version_no_v}.zip"
+                    handle_file "$file" "plix-windows-${version_no_v}.zip"
                   elif [[ "$lower" == *.exe ]]; then
-                    handle_file "$file" "streamsilu-windows-${version_no_v}.exe"
+                    handle_file "$file" "plix-windows-${version_no_v}.exe"
                   fi
                   ;;
                 *android*)
                   if [[ "$lower" == *.apk ]]; then
-                    handle_file "$file" "streamsilu-android-${version_no_v}.apk"
+                    handle_file "$file" "plix-android-${version_no_v}.apk"
                   fi
                   ;;
               esac
@@ -224,6 +224,6 @@ jobs:
         run: |
           set -euo pipefail
           if ! gh release view "$GITHUB_REF_NAME" >/dev/null 2>&1; then
-            gh release create "$GITHUB_REF_NAME" --title "streamsilu $GITHUB_REF_NAME" --generate-notes
+            gh release create "$GITHUB_REF_NAME" --title "PLIX $GITHUB_REF_NAME" --generate-notes
           fi
           find release-files -type f -exec gh release upload "$GITHUB_REF_NAME" {} --clobber +

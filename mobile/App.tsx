@@ -35,7 +35,7 @@ function AppContent() {
 
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-      <View style={styles.header}><Text style={styles.brand}>STREAMSILU</Text><Text style={styles.subtitle}>Watch anywhere</Text></View>
+      <View style={styles.header}><Text style={styles.brand}>PLIX</Text><Text style={styles.subtitle}>Watch anywhere</Text></View>
       <View style={styles.segment}><Pressable onPress={() => setMediaType('movie')} style={[styles.segmentButton, mediaType === 'movie' && styles.activeSegment]}><Text style={styles.segmentText}>Movie</Text></Pressable><Pressable onPress={() => setMediaType('tv')} style={[styles.segmentButton, mediaType === 'tv' && styles.activeSegment]}><Text style={styles.segmentText}>TV Series</Text></Pressable><Pressable onPress={() => setMediaType('torrent')} style={[styles.segmentButton, mediaType === 'torrent' && styles.activeSegment]}><Text style={styles.segmentText}>Torrent</Text></Pressable></View>
       {mediaType === 'torrent' ? <TextInput value={magnet} onChangeText={setMagnet} placeholder="Magnet link or infohash" placeholderTextColor="#71717a" style={styles.input} autoCapitalize="none" /> : <TextInput value={mediaId} onChangeText={setMediaId} keyboardType="number-pad" placeholder="TMDB ID" placeholderTextColor="#71717a" style={styles.input} />}
       {mediaType === 'tv' && <View style={styles.row}><TextInput value={season} onChangeText={setSeason} keyboardType="number-pad" placeholder="Season" placeholderTextColor="#71717a" style={[styles.input, styles.half]} /><TextInput value={episode} onChangeText={setEpisode} keyboardType="number-pad" placeholder="Episode" placeholderTextColor="#71717a" style={[styles.input, styles.half]} /></View>}

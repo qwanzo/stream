@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { X, Check } from 'lucide-react';
 
-const TMDB_KEY = 'streamsilu_tmdb_api_key';
-const THEME_KEY = 'streamsilu_theme';
+const TMDB_KEY = 'plix_tmdb_api_key';
+const THEME_KEY = 'plix_theme';
 
 export default function SettingsPage({ onClose }) {
   const [tmdbKey, setTmdbKey] = useState(() => localStorage.getItem(TMDB_KEY) || '5e3fe84dd167f1eab0a5695d99177cf7');
@@ -78,7 +78,7 @@ export default function SettingsPage({ onClose }) {
 
           <div className="pt-4 border-t border-zinc-800">
             <p className="text-[10px] text-gray-600 text-center">
-              streamsilu v1.0.0 — Built with Tauri + React
+              PLIX v1.0.0 — Built with Tauri + React
             </p>
           </div>
         </div>
